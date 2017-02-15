@@ -4,7 +4,7 @@
 package linkedList;
 
 /**
- * @author Aastha Jain  29,34
+ * @author Aastha Jain 29,34
  *
  */
 public class Solutions {
@@ -12,8 +12,7 @@ public class Solutions {
 	/**
 	 * @param args
 	 */
-	
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LinkedListNode head = null;
@@ -93,7 +92,7 @@ public class Solutions {
 		LinkedListNode.removeDuplicates(head25);
 		LinkedListNode.printLinkedList(head25);
 		System.out.println("--------------------------");
-		
+
 		/* 26. Remove Duplicates Unsorted List */
 		System.out.println("--------------------------");
 		System.out.println("\n26. Linked list is:- ");
@@ -154,7 +153,7 @@ public class Solutions {
 		LinkedListNode.deleteAlternateNode(head);
 		LinkedListNode.printLinkedList(head);
 		System.out.println("--------------------------");
-		
+
 		/**
 		 * 32. Alternating split of a given Singly Linked List
 		 */
@@ -163,106 +162,128 @@ public class Solutions {
 		LinkedListNode.printLinkedList(head2);
 		LinkedListNode.AlternatingSplit(head2);
 		System.out.println("--------------------------");
-		
+
 		/**
 		 * 33. Identical Linked Lists
 		 */
 		System.out.println("----------33-----------");
 		System.out.println("Identical Singly Linked List ");
 		LinkedListNode.printLinkedList(head);
-		System.out.println("Two list are Identical : "+LinkedListNode.areIdentical(head, head));
-		System.out.println("Two list are Identical : "+LinkedListNode.areIdentical(head, head2));
+		System.out.println("Two list are Identical : " + LinkedListNode.areIdentical(head, head));
+		System.out.println("Two list are Identical : " + LinkedListNode.areIdentical(head, head2));
 		System.out.println("--------------------------");
-		
+
 		/**
 		 * 34. Merge Sort for Linked Lists
 		 */
 		System.out.println("----------34-----------");
 		System.out.println("Merge Sort for Linked List ");
-		LinkedListNode list=null;
-		for(int i=12;i<22;i++){
-			if(list==null) list=new LinkedListNode(8);
-			else if(i%2==0) list.insertAtEnd(i/2);
-			else if(i%3==0) list.insertAtEnd(i+8);
-			else if(i%4==0) list.insertAtEnd(i+1);
+		LinkedListNode list = null;
+		for (int i = 12; i < 22; i++) {
+			if (list == null)
+				list = new LinkedListNode(8);
+			else if (i % 2 == 0)
+				list.insertAtEnd(i / 2);
+			else if (i % 3 == 0)
+				list.insertAtEnd(i + 8);
+			else if (i % 4 == 0)
+				list.insertAtEnd(i + 1);
 		}
 		LinkedListNode.printLinkedList(list);
-		//LinkedListNode.MergeSort(list);
+		// LinkedListNode.MergeSort(list);
 		LinkedListNode.printLinkedList(list);
 		System.out.println("--------------------------");
-		
-		/**35.
-		 * Reverse nodes with a Group of Size k
+
+		/**
+		 * 35. Reverse nodes with a Group of Size k
 		 */
 		System.out.println("----------35-----------");
-		LinkedListNode head35=null;
-		for(int i=12;i<21;i++){
-			if(head35==null) head35=new LinkedListNode(5);
-			else  head35.insertAtEnd(i);
+		LinkedListNode head35 = null;
+		for (int i = 12; i < 21; i++) {
+			if (head35 == null)
+				head35 = new LinkedListNode(5);
+			else
+				head35.insertAtEnd(i);
 		}
-		int k=4;
-		System.out.println("Reverse nodes with a Group of Size "+k);
+		int k = 4;
+		System.out.println("Reverse nodes with a Group of Size " + k);
 		LinkedListNode.printLinkedList(head35);
-		LinkedListNode reversedList=LinkedListNode.reverseKnodes(head35, k);
+		LinkedListNode reversedList = LinkedListNode.reverseKnodes(head35, k);
 		LinkedListNode.printLinkedList(reversedList);
 		System.out.println("--------------------------");
-		
-		/**37.
-		 * Delete nodes which have a greater value on right side
+
+		/**
+		 * 37. Delete nodes which have a greater value on right side
 		 */
 		System.out.println("----------37-----------");
-		LinkedListNode head36=null;
-		for(int i=12;i<21;i++){
-			if(head36==null) head36=new LinkedListNode(5);
-			else  head36.insertAtEnd(i%4);
+		LinkedListNode head36 = null;
+		for (int i = 12; i < 21; i++) {
+			if (head36 == null)
+				head36 = new LinkedListNode(5);
+			else
+				head36.insertAtEnd(i % 4);
 		}
-		
+
 		System.out.println("Delete nodes which have a greater value on right side ");
 		LinkedListNode.printLinkedList(head36);
-		LinkedListNode greaterRight=LinkedListNode.GreaterRightSide(head36);
+		LinkedListNode greaterRight = LinkedListNode.GreaterRightSide(head36);
 		LinkedListNode.printLinkedList(greaterRight);
 		System.out.println("--------------------------");
-		
-		/**38.
-		 * Segregate even and odd nodes in a Linked List
+
+		/**
+		 * 38. Segregate even and odd nodes in a Linked List
 		 */
 		System.out.println("----------38-----------");
 		LinkedListNode.printLinkedList(head2);
 		System.out.println("Segregate even and odd nodes in a Linked List ");
 		LinkedListNode.segregateEvenAndOdd(head2);
 		System.out.println("--------------------------");
-		
-		/**39.
-		 * Detect and Remove Loop in a Linked List.
+
+		/**
+		 * 39. Detect and Remove Loop in a Linked List.
 		 */
 		System.out.println("----------39-----------");
-		LinkedListNode head39=null;
-		for(int i=12;i<24;i++){
-			if(head39==null) head39=new LinkedListNode(5);
-			else  head39.insertAtEnd(i%4);
+		LinkedListNode head39 = null;
+		for (int i = 12; i < 24; i++) {
+			if (head39 == null)
+				head39 = new LinkedListNode(5);
+			else
+				head39.insertAtEnd(i % 4);
 		}
 		head39.next.next.next.next.next = head39.next.next;
 		System.out.println("Detect and Remove Loop in a Linked List. ");
 		LinkedListNode.detectAndRemoveLoop(head39);
 		LinkedListNode.printLinkedList(head39);
 		System.out.println("-------------------------");
-		
-		/**40.
-		 * Adding Two Numbers using Linked List 
-		*/
+
+		/**
+		 * 40. Adding Two Numbers using Linked List
+		 */
 		System.out.println("----------40-----------");
-		LinkedListNode head40=null;
-		for(int i=1;i<9;i++){
-			if(head40==null) head40=new LinkedListNode(5);
-			else  head40.insertAtEnd(i%4);
+		LinkedListNode head40 = null;
+		for (int i = 1; i < 9; i++) {
+			if (head40 == null) head40 = new LinkedListNode(5);
+			else
+				head40.insertAtEnd(i % 4);
 		}
 		LinkedListNode.printLinkedList(head40);
 		LinkedListNode.printLinkedList(head40);
 		System.out.println("Adding Two Numbers using Linked List ");
 		LinkedListNode.AddLinkedListWithCarry(head40, head40);
 		System.out.println("--------------------------");
-		
 
+		/**
+		 * QuickSort for LinkedList
+		 */
+		System.out.println("----------QuickSort-----------");
+		
+		
+		LinkedListNode end = head39;
+		while (end != null && end.next != null) {
+			end=end.next;
+		}
+		LinkedListNode.printLinkedList(head39);
+		LinkedListNode.printLinkedList(LinkedListNode.QuickSort(head39, end));
 	}
 
 }

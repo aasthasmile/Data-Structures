@@ -100,7 +100,8 @@ public class LinkedListNode<T> {
 		return size;
 
 	}
-
+	
+	
 	protected static void NthLastElement(LinkedListNode head, int n) {
 		if (head == null)
 			return;
@@ -693,5 +694,51 @@ public class LinkedListNode<T> {
 
 		}
 	}
+	
+	
+	/**
+	 * QuickSort on Singly Linked List.
+	 */
+	
+		public static LinkedListNode QuickSort(LinkedListNode begin, LinkedListNode end) {
 
+        if (begin == end) 
+		return begin;
+
+        //Choose the End Element in Linked list  as Pivot element
+        LinkedListNode pivot = end;
+        LinkedListNode cur = begin;
+        LinkedListNode prev = null;
+        LinkedListNode node = null;
+
+        //Traverse the linked List while you reach the end of linked list.
+         while(pivot != cur) {
+            if((int)cur.data < (int)pivot.data) {
+                if (node==null) node = cur;
+                prev = cur;
+                cur = cur.next;
+            } else {
+
+                end.next = cur;
+                end = end.next;
+                LinkedListNode tmp = cur.next;
+                cur.next = null;
+                cur = tmp;
+                if (prev!=null) {
+                    prev.next = cur;
+                }
+            }
+        }
+        if (prev != null) {
+            node = QuickSort(node,prev);
+            LinkedListNode tmp = node;
+            while(pivot != tmp.next) tmp = tmp.next;
+            tmp.next = pivot;
+        }else {
+            node = pivot;
+        }
+        if (pivot != end)
+            pivot.next = QuickSort(pivot.next, end);
+        return node;
+    }
 }
