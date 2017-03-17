@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Stack;
 
-
 /**
  * @author Aastha Jain
  *
@@ -100,8 +99,7 @@ public class LinkedListNode<T> {
 		return size;
 
 	}
-	
-	
+
 	protected static void NthLastElement(LinkedListNode head, int n) {
 		if (head == null)
 			return;
@@ -606,62 +604,59 @@ public class LinkedListNode<T> {
 	}
 
 	/**
-	 * 39. Detect and Remove Loop in a Linked List.
-	 *  slow and fast pointers meet at some point after Floyd’s Cycle finding algorithm.
-	 *  
-	 *  Algorithms : So if we start moving both pointers again at same speed such that one pointer (say slow) begins from head node
-	 *   of linked list and other pointer (say fast) begins from meeting point. When slow pointer reaches beginning of linked list 
-	 *   (has made m steps). Fast pointer would have made also moved m steps as they are now moving same pace. Since m+k is a multiple
-	 *    of n and fast starts from k, they would meet at the beginning.
+	 * 39. Detect and Remove Loop in a Linked List. slow and fast pointers meet
+	 * at some point after Floyd’s Cycle finding algorithm.
+	 * 
+	 * Algorithms : So if we start moving both pointers again at same speed such
+	 * that one pointer (say slow) begins from head node of linked list and
+	 * other pointer (say fast) begins from meeting point. When slow pointer
+	 * reaches beginning of linked list (has made m steps). Fast pointer would
+	 * have made also moved m steps as they are now moving same pace. Since m+k
+	 * is a multiple of n and fast starts from k, they would meet at the
+	 * beginning.
 	 */
 
 	public static void detectAndRemoveLoop(LinkedListNode head) {
-		
+
 		if (head == null || head.next == null)
 			return;
-		
-		//Detecting loop in linked list using Slow and Fast Pointer.
-		LinkedListNode slow=head;
-		LinkedListNode fast=head.next;
-		
-		while(fast!=null && fast.next!=null){
-			if(slow!=fast){
-				slow=slow.next;
-				fast=fast.next.next;
-			}
-			else{
-			   break;
-			}
-		}
-		
-		//if there is a loop in linked list
-		//1.Move slow and fast pointer at same speed.
-		//2.Slow is at head of linked list and fast is at the meeting point.
-		//3. When slow and fast.next meet each other we are at the intersection 
-		//4. We can set fast.next=null to remove the loop
-		if(slow==fast){
-			slow=head;
-			while(slow!=fast.next){
-				slow=slow.next;
-				fast=fast.next;
-			}
-			fast.next=null;
-		}
-		
-		
-		
-	}
-	
-	/**40.
-	 * Adding Two Numbers using Linked List 
-	 * Input:
-		  First List: 5->6->3  // represents number 365
-		  Second List: 8->4->2 //  represents number 248
-		Output
-		  Resultant list: 3->1->6  // represents number 613
 
+		// Detecting loop in linked list using Slow and Fast Pointer.
+		LinkedListNode slow = head;
+		LinkedListNode fast = head.next;
+
+		while (fast != null && fast.next != null) {
+			if (slow != fast) {
+				slow = slow.next;
+				fast = fast.next.next;
+			} else {
+				break;
+			}
+		}
+
+		// if there is a loop in linked list
+		// 1.Move slow and fast pointer at same speed.
+		// 2.Slow is at head of linked list and fast is at the meeting point.
+		// 3. When slow and fast.next meet each other we are at the intersection
+		// 4. We can set fast.next=null to remove the loop
+		if (slow == fast) {
+			slow = head;
+			while (slow != fast.next) {
+				slow = slow.next;
+				fast = fast.next;
+			}
+			fast.next = null;
+		}
+
+	}
+
+	/**
+	 * 40. Adding Two Numbers using Linked List Input: First List: 5->6->3 //
+	 * represents number 365 Second List: 8->4->2 // represents number 248
+	 * Output Resultant list: 3->1->6 // represents number 613
+	 * 
 	 */
-	
+
 	public static void AddLinkedListWithCarry(LinkedListNode head1, LinkedListNode head2) {
 		int len1 = LinkedListNode.sizeOfLinkedList(head1);
 		int len2 = LinkedListNode.sizeOfLinkedList(head2);
@@ -673,20 +668,19 @@ public class LinkedListNode<T> {
 			LinkedListNode node3 = null;
 			LinkedListNode head3 = null;
 			while (head1 != null) {
-				
-				data = (((int)head1.data + (int)head2.data) % 10) + carry;
-				carry = ((int)head1.data + (int)head2.data) / 10;
-				
+
+				data = (((int) head1.data + (int) head2.data) % 10) + carry;
+				carry = ((int) head1.data + (int) head2.data) / 10;
+
 				if (node3 == null) {
-					node3 = new LinkedListNode(((int)head1.data +(int) head2.data) % 10);
+					node3 = new LinkedListNode(((int) head1.data + (int) head2.data) % 10);
 					head3 = node3;
-				} 
-				else {
+				} else {
 					node3.insertAtEnd(data);
 				}
 				head1 = head1.next;
 				head2 = head2.next;
-				
+
 			}
 
 			System.out.println("\n\nLinked list after addition:- ");
@@ -694,51 +688,52 @@ public class LinkedListNode<T> {
 
 		}
 	}
-	
-	
+
 	/**
 	 * QuickSort on Singly Linked List.
 	 */
-	
-		public static LinkedListNode QuickSort(LinkedListNode begin, LinkedListNode end) {
 
-        if (begin == end) 
-		return begin;
+	public static LinkedListNode QuickSort(LinkedListNode begin, LinkedListNode end) {
 
-        //Choose the End Element in Linked list  as Pivot element
-        LinkedListNode pivot = end;
-        LinkedListNode cur = begin;
-        LinkedListNode prev = null;
-        LinkedListNode node = null;
+		if (begin == end)
+			return begin;
 
-        //Traverse the linked List while you reach the end of linked list.
-         while(pivot != cur) {
-            if((int)cur.data < (int)pivot.data) {
-                if (node==null) node = cur;
-                prev = cur;
-                cur = cur.next;
-            } else {
+		// Choose the End Element in Linked list as Pivot element
+		LinkedListNode pivot = end;
+		LinkedListNode cur = begin;
+		LinkedListNode prev = null;
+		LinkedListNode node = null;
 
-                end.next = cur;
-                end = end.next;
-                LinkedListNode tmp = cur.next;
-                cur.next = null;
-                cur = tmp;
-                if (prev!=null) {
-                    prev.next = cur;
-                }
-            }
-        }
-        if (prev != null) {
-            node = QuickSort(node,prev);
-            LinkedListNode tmp = node;
-            while(pivot != tmp.next) tmp = tmp.next;
-            tmp.next = pivot;
-        }else {
-            node = pivot;
-        }
-        if (pivot != end)
-            pivot.next = QuickSort(pivot.next, end);
-        return node;
-    }
+		// Traverse the linked List while you reach the end of linked list.
+		while (pivot != cur) {
+			if ((int) cur.data < (int) pivot.data) {
+				if (node == null)
+					node = cur;
+				prev = cur;
+				cur = cur.next;
+			} else {
+
+				end.next = cur;
+				end = end.next;
+				LinkedListNode tmp = cur.next;
+				cur.next = null;
+				cur = tmp;
+				if (prev != null) {
+					prev.next = cur;
+				}
+			}
+		}
+		if (prev != null) {
+			node = QuickSort(node, prev);
+			LinkedListNode tmp = node;
+			while (pivot != tmp.next)
+				tmp = tmp.next;
+			tmp.next = pivot;
+		} else {
+			node = pivot;
+		}
+		if (pivot != end)
+			pivot.next = QuickSort(pivot.next, end);
+		return node;
+	}
 }
