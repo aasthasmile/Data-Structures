@@ -23,10 +23,6 @@ public class Treenode<T> {
 		parent = null;
 	}
 
-	Treenode() {
-
-	}
-
 	T getData() {
 		return data;
 	}
@@ -280,7 +276,7 @@ class Tree {
 		Treenode polled = q.peek();
 		if (polled.left != null && polled.right != null) {
 			q.remove();
-			polled=q.peek();
+			polled = q.peek();
 		}
 		int height = insertinBTRecursive_height(polled, data, q);
 		return height;
@@ -379,40 +375,40 @@ class Tree {
 	}
 
 	/**
-	 * Level Order Traversal in reverse Order.
-	 * Method : We are using a Stack and a Queue. 
-	 * In post order traversal(LRD) rather than printing the last element , we are adding it to
-	 * the stack using level order traversal 
+	 * Level Order Traversal in reverse Order. Method : We are using a Stack and
+	 * a Queue. In post order traversal(LRD) rather than printing the last
+	 * element , we are adding it to the stack using level order traversal
 	 * 
-	 *          *10*
-	 *    20*          *30
-	 * 40*   *50     *60    *70
+	 * *10* 20* *30 40* *50 *60 *70
 	 * 
-	 * Stack : 10 20 30
-	 * Queue : 40 50 60 70
+	 * Stack : 10 20 30 Queue : 40 50 60 70
 	 * 
 	 * Finally transfer all the elements in the queue to the top of the stack .
 	 * Print all the elements in Stack in LIFO order.
+	 * 
 	 * @param root
 	 */
-	public void LevelOrderReverse(Treenode root) {
-		if (root == null)
+	public void LevelOrderReverse(Treenode node) {
+		if (node == null)
 			return;
 		Queue<Treenode> q = new LinkedList<Treenode>();
 		Stack<Treenode> stack = new Stack<Treenode>();
-		
-		q.offer(root);
-		
-		while(!q.isEmpty()){
-			if(root.left!=null)
+
+		q.offer(node);
+
+		while (!q.isEmpty()) {
+			Treenode root = q.poll();
+			if (root.left != null)
 				q.add(root.left);
-			if(root.right!=null)
+			if (root.right != null)
 				q.add(root.right);
-			
-		stack.push	(root);
+
+			stack.push(root);
 		}
-		
-		System.out.print(stack.pop()+" ");
+
+		while (!stack.isEmpty()) {
+			System.out.print(stack.pop().data + " ");
+		}
 
 	}
 
@@ -439,16 +435,19 @@ class Tree {
 
 	}
 
-	/** Diameter of a tree (width of the tree) */
+	/**
+	 * Diameter of a tree (width of the tree)
+	 */
 	List<Integer> list = new ArrayList<Integer>();
+
 	public int widthOfTree(Treenode root) {
 
 		List<Integer> list = diameter(root);
 
-		//Sorting the list to get two top elements in a list
+		// Sorting the list to get two top elements in a list
 		Collections.sort(list, Collections.reverseOrder());
 
-		int diameter = list.get(0) + list.get(1)+1;
+		int diameter = list.get(0) + list.get(1) + 1;
 
 		return diameter;
 
@@ -461,10 +460,89 @@ class Tree {
 
 		diameter(root.left);
 		diameter(root.right);
-		
+
 		list.add(root.height);
 		return list;
 
 	}
 
+	/**
+	 * Minimum Depth of a Binary tree. The minimum depth is the number of nodes
+	 * along the shortest path from root node down to the nearest leaf node.
+	 */
+	public int minimumDepth(Treenode root) {
+		if (root == null)
+			return 0;
+		if (root.left == null && root.right == null) {
+			return 1;
+		}
+		int left = minimumDepth(root.left);
+		int right = minimumDepth(root.right);
+		
+		if (left == 0)
+			return right + 1;
+		else if (right == 0)
+			return left + 1;
+		return (Math.min(left, right) + 1);
+	}
+
+	/**
+	 * Total Number of leaves in the binary tree. Method : If a node has both
+	 * left and right children as NULL then the nodes are called leaf nodes and
+	 * hence we increment the count.
+	 */
+
+	public int numberOfLeaves(Treenode root) {
+		if (root == null)
+			return 0;
+		if (root.left == null && root.right == null)
+			return 1;
+		int leftcount = numberOfLeaves(root.left);
+		int rightcount = numberOfLeaves(root.right);
+
+		return (leftcount + rightcount);
+	}
+	
+	/**
+	 * Number of Full Nodes in a binary Tree.
+	 * Definition : A full node is a node that has both left and right children.
+	 */
+
+	public int numberOfFullNodes(Treenode root){
+		if(root==null)
+			return 0;
+		
+		int leftcount = numberOfFullNodes(root.left);
+		int rightcount = numberOfFullNodes(root.right);
+		if(root.left==null && root.right==null)
+			return 0;
+		if(root.left!=null && root.right!=null){
+			return 1+leftcount+rightcount;
+		}
+		if(root.left==null && root.right!=null){
+			return rightcount;
+		}
+		if(root.left!=null && root.right!=null){
+			return leftcount;
+		}
+		return 0;
+		
+	}
+	
+	/**
+	 * Number of half nodes in a Binary Tree.
+	 * Definition : Nodes having only one child is called Half nodes.
+	 */
+	public int numberOfHalfNodes(Treenode root){
+		if(root==null) return 0;
+		
+		int leftcount=numberOfHalfNodes(root.left);
+		int rightcount=numberOfHalfNodes(root.right);
+		if((root.left!=null && root.right==null) ||(root.left==null && root.right!=null)){
+			return  1+leftcount+rightcount;
+		}
+		else{
+			return leftcount+rightcount;
+		}
+	}
 }

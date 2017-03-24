@@ -3,6 +3,8 @@ package Trees;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 public class BinaryTree {
 
 	@SuppressWarnings("unchecked")
@@ -14,9 +16,14 @@ public class BinaryTree {
 		root.right = new Treenode<Integer>(3);
 		root.left.left = new Treenode<Integer>(4);
 		root.left.right = new Treenode<Integer>(5);
-		root.right.left = new Treenode<Integer>(6);
+	    root.right.left = new Treenode<Integer>(6);
 		root.right.right = new Treenode<Integer>(7);
-
+		
+		/*finding minimum depth*/
+		root.left.left.right= new Treenode<Integer>(10);
+		root.right.right.left = new Treenode<Integer>(8);
+		root.right.right.right = new Treenode<Integer>(9);
+		
 		System.out.println("\nInserting an element in the Binary Tree:");
 		Tree t = new Tree();
 		Treenode<Integer> rootnode = null;
@@ -44,8 +51,23 @@ public class BinaryTree {
 		System.out.println("\nThe Inorder traversal(iteratively) is :");
 		t.InOrderIterative(root);
 
-		System.out.println("\nThe LevelOrder traversal is :");
+		System.out.println("\nThe Level Order traversal is :");
 		t.LevelOrderTraversal(root);
+		
+		System.out.println("\nLevel order traversal in Reverse order :");
+		t.LevelOrderReverse(root);
+		
+		System.out.println("\nMinimum Depth of a binary Tree :");
+		System.out.print(t.minimumDepth(root));
+		
+		System.out.println("\nNumber of Leaves in a binary tree :");
+		System.out.print(t.numberOfLeaves(root));
+		
+		System.out.println("\nNumber of Full nodes in a binary tree :");
+		System.out.println(t.numberOfFullNodes(root));
+		
+		System.out.println("\nNumber of half nodes in a binary Tree :");
+		System.out.println(t.numberOfHalfNodes(root));
 
 		System.out.println("\nFinding Maximum Element in a Binary tree :");
 		System.out.println(t.MaxElementinBT(root));
@@ -53,7 +75,7 @@ public class BinaryTree {
 
 		System.out.println("\n--------Tree 2: ------ ");
 		Queue<Treenode> queue = new LinkedList<Treenode>();
-		;
+		
 		Treenode<Integer> tree2 = null;
 
 		for (int i = 10; i <= 16; i++) {
@@ -93,6 +115,7 @@ public class BinaryTree {
 		System.out.println("\n\nWidth of the tree: ");
 		System.out.println(t.widthOfTree(tree3));
 
+				
 	}
 
 }
