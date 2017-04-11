@@ -2,10 +2,12 @@ package Trees;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.Map.Entry;
 
 public class Treenode<T> {
 
@@ -13,14 +15,11 @@ public class Treenode<T> {
 	Treenode<T> left;
 	Treenode<T> right;
 	Treenode<T> parent;
-
 	int height;
 
 	Treenode(T item) {
 		data = item;
-		left = null;
-		right = null;
-		parent = null;
+		left = right = parent = null;
 	}
 
 	T getData() {
@@ -42,68 +41,54 @@ public class Treenode<T> {
 	public void setRight() {
 		this.right = right;
 	}
-
 }
 
 class Tree {
-
 	int maxdata = Integer.MIN_VALUE;
 
 	/**
 	 * Pre-Order Traversal of a Binary Tree. (Data Left Right) or (Data Right
-	 * Left)
-	 * 
-	 * @param root
+	 * Left) Time Complexity :O(n) Space Complexity :O(n)-->Stack maintains the
+	 * recursive calls
 	 */
 
 	void preOrderTraversal(Treenode root) {
 		if (root == null)
 			return;
-
 		System.out.print(root.data + " ");
 		preOrderTraversal(root.left);
 		preOrderTraversal(root.right);
-
 	}
 
 	/**
 	 * In Order Traversal of a Binary Tree. ( Left Data Right) or (Right Data
-	 * Left)
-	 * 
-	 * @param root
+	 * Left) Time Complexity :O(n) Space Complexity :O(n)
 	 */
 
 	public void InOrderTraversal(Treenode root) {
 		if (root == null)
 			return;
-
 		InOrderTraversal(root.left);
 		System.out.print(root.data + " ");
 		InOrderTraversal(root.right);
-
 	}
 
 	/**
 	 * Post Order Traversal of a Binary Tree. (Left Right Data) or (Right Left
-	 * Data)
-	 * 
-	 * @param root
+	 * Data) Time Complexity :O(n) Space Complexity :O(n)
 	 */
 
 	public void postOrderTraversal(Treenode root) {
 		if (root == null)
 			return;
-
 		postOrderTraversal(root.left);
 		postOrderTraversal(root.right);
 		System.out.print(root.data + " ");
-
 	}
 
 	/**
-	 * * Pre Order Traversal of a Binary Tree
-	 * 
-	 * @param root
+	 * * Pre Order Traversal of a Binary Tree. Time Complexity :O(n) Space
+	 * Complexity :O(n)
 	 */
 	public void preOrderIterative(Treenode root) {
 		Stack st = new Stack();
@@ -126,7 +111,10 @@ class Tree {
 		}
 	}
 
-	/** In Order Traversal of a Binary Tree */
+	/**
+	 * In Order Traversal of a Binary Tree Time Complexity :O(n) Space
+	 * Complexity :O(n)
+	 */
 	public void InOrderIterative(Treenode root) {
 
 		Stack<Treenode> st = new Stack<Treenode>();
@@ -154,18 +142,46 @@ class Tree {
 		}
 	}
 
-	/** Post Order Traversal of a Binary Tree */
+	/**
+	 * Post Order Traversal of a Binary Tree
+	 * 
+	 * 1.1 Create an empty stack 2.1 Do following while root is not NULL a) Push
+	 * root's right child and then root to stack. b) Set root as root's left
+	 * child. 2.2 Pop an item from stack and set it as root. a) If the popped
+	 * item has a right child and the right child is at top of stack, then
+	 * remove the right child from stack, push the root back and set root as
+	 * root's right child. b) Else print root's data and set root as NULL. 2.3
+	 * Repeat steps 2.1 and 2.2 while stack is not empty.
+	 */
 	public void postOrderIterative(Treenode root) {
-		Stack st = new Stack();
-		Treenode current = root;
-		st.push(root);
+		Stack<Treenode> st = new Stack<Treenode>();
+		st.push(new Treenode(-1));
+
+		do {
+			while (root != null) {
+				if (root.right != null)
+					st.push(root.right);
+				st.push(root);
+				root = root.left;
+			}
+
+			root = st.pop();
+
+			if (root.right != null && st.peek() == root.right) {
+				st.pop();
+				st.push(root);
+				root = root.right;
+			} else {
+				System.out.print(root.data + " ");
+				root = null;
+			}
+
+		} while (!st.isEmpty());
 
 	}
 
 	/**
 	 * Breadth first Search or Level Order Traversal of a Binary Tree.
-	 * 
-	 * @param root
 	 */
 	public void LevelOrderTraversal(Treenode root) {
 		Queue<Treenode> myQueue = new LinkedList<Treenode>();
@@ -209,12 +225,11 @@ class Tree {
 					queue.offer(polled.left);
 				else {
 					polled.left = new Treenode(data);
-					// polled.left.height=root.height+1;
 					return root;
 				}
-				if (polled.right != null) {
+				if (polled.right != null)
 					queue.offer(polled.right);
-				} else {
+				else {
 					polled.right = new Treenode(data);
 					// polled.right.height=root.height+1;
 					return root;
@@ -288,47 +303,35 @@ class Tree {
 	 * subtree and search the maximum element in right subtree.Compare them with
 	 * the element at the root and return the maximum. Complexity : O(n) using
 	 * level order Traversal i.e BFS Space Complexity :O(n)
-	 * 
-	 * @param root
 	 */
 
 	public int MaxElementinBT(Treenode root) {
+		Queue<Treenode> queue = new LinkedList<Treenode>();
 		if (root == null)
 			return 0;
-
-		Queue<Treenode> queue = new LinkedList<Treenode>();
-
 		if (maxdata < (int) root.data)
 			maxdata = (int) root.data;
 
-		if (root.left != null)
-			queue.offer(root.left);
-		if (root.right != null)
-			queue.offer(root.right);
+		queue.offer(root.left);
+		queue.offer(root.right);
 
-		while (!queue.isEmpty()) {
+		while (!queue.isEmpty())
 			MaxElementinBT(queue.poll());
-		}
 
-		// System.out.println(maxdata);
 		return maxdata;
 	}
 
 	/**
 	 * Maximum Element in Binary Tree using Pre order Traversal DFS No extra
-	 * Space complexity
-	 * 
-	 * @param root
+	 * Space complexity.
 	 */
-
 	public int MaxElementinBT_PreOrder(Treenode root) {
-		if (root == null) {
+		if (root == null)
 			return maxdata;
-		}
 
-		if (maxdata < (int) root.data) {
+		if (maxdata < (int) root.data)
 			maxdata = (int) root.data;
-		}
+
 		MaxElementinBT_PreOrder(root.left);
 		MaxElementinBT_PreOrder(root.right);
 
@@ -342,14 +345,13 @@ class Tree {
 	public Treenode SearchElementinBT(Treenode root, int data) {
 		if (root == null)
 			return null;
-
 		Treenode leftroot = null, rightroot = null;
 
 		leftroot = SearchElementinBT(root.left, data);
 		rightroot = SearchElementinBT(root.right, data);
-		if ((int) root.data == data) {
+		if ((int) root.data == data)
 			return root;
-		} else if (leftroot != null)
+		else if (leftroot != null)
 			return leftroot;
 		else if (rightroot != null)
 			return rightroot;
@@ -360,8 +362,6 @@ class Tree {
 	/**
 	 * Size of the Binary Tree. The total number of nodes in the binary tree
 	 * (including root of the tree)
-	 * 
-	 * @param root
 	 */
 	public int SizeOfBT(Treenode node) {
 		int size = 0;
@@ -379,12 +379,9 @@ class Tree {
 	 * a Queue. In post order traversal(LRD) rather than printing the last
 	 * element , we are adding it to the stack using level order traversal
 	 * 
-	 * *10* 20* *30 40* *50 *60 *70
-	 * 
-	 * Stack : 10 20 30 Queue : 40 50 60 70
-	 * 
-	 * Finally transfer all the elements in the queue to the top of the stack .
-	 * Print all the elements in Stack in LIFO order.
+	 * *10* 20* *30 40* *50 *60 *70 Stack : 10 20 30 Queue : 40 50 60 70 Finally
+	 * transfer all the elements in the queue to the top of the stack . Print
+	 * all the elements in Stack in LIFO order.
 	 * 
 	 * @param root
 	 */
@@ -412,58 +409,58 @@ class Tree {
 
 	}
 
-	/**
-	 * Height of a tree in Binary tree.
-	 * 
-	 */
+	/** Height of a tree in Binary tree */
 	public int height(Treenode root) {
-		if (root == null) {
+		if (root == null)
 			return 0;
-		}
-
 		int leftheight = 1;
 		leftheight = leftheight + height(root.left);
 
 		int rightheight = 1;
 		rightheight = rightheight + height(root.left);
 
-		if (leftheight > rightheight) {
-			return leftheight;
-		} else {
-			return rightheight;
-		}
-
+		return (leftheight > rightheight) ? leftheight : rightheight;
 	}
 
-	/**
-	 * Diameter of a tree (width of the tree)
-	 */
+	/** Diameter of a tree (width of the tree) */
 	List<Integer> list = new ArrayList<Integer>();
 
 	public int widthOfTree(Treenode root) {
-
 		List<Integer> list = diameter(root);
 
 		// Sorting the list to get two top elements in a list
 		Collections.sort(list, Collections.reverseOrder());
 
 		int diameter = list.get(0) + list.get(1) + 1;
-
 		return diameter;
-
 	}
 
 	public List<Integer> diameter(Treenode root) {
-
 		if (root == null)
 			return null;
-
 		diameter(root.left);
 		diameter(root.right);
-
 		list.add(root.height);
 		return list;
 
+	}
+
+	/**
+	 * Maximum Depth of a Binary tree. The maximum depth is the number of nodes
+	 * along the longest path from root node down to the leaf node.
+	 */
+	public int maximumDepth(Treenode root) {
+		if (root == null)
+			return 0;
+
+		int left = maximumDepth(root.left);
+		int right = maximumDepth(root.right);
+
+		// Diameter
+		// max=Math.max(max,left+right);
+		// return max
+
+		return (Math.max(left, right) + 1);
 	}
 
 	/**
@@ -473,12 +470,16 @@ class Tree {
 	public int minimumDepth(Treenode root) {
 		if (root == null)
 			return 0;
-		if (root.left == null && root.right == null) {
+		if (root.left == null && root.right == null)
 			return 1;
-		}
+
 		int left = minimumDepth(root.left);
 		int right = minimumDepth(root.right);
-		
+
+		/*
+		 * if the left subtree is a null Tree , we consider the right subtree
+		 * value
+		 */
 		if (left == 0)
 			return right + 1;
 		else if (right == 0)
@@ -502,47 +503,288 @@ class Tree {
 
 		return (leftcount + rightcount);
 	}
-	
+
 	/**
-	 * Number of Full Nodes in a binary Tree.
-	 * Definition : A full node is a node that has both left and right children.
+	 * Number of Full Nodes in a binary Tree. Definition : A full node is a node
+	 * that has both left and right children.
 	 */
 
-	public int numberOfFullNodes(Treenode root){
-		if(root==null)
+	public int numberOfFullNodes(Treenode root) {
+		if (root == null)
 			return 0;
-		
+
 		int leftcount = numberOfFullNodes(root.left);
 		int rightcount = numberOfFullNodes(root.right);
-		if(root.left==null && root.right==null)
+		if (root.left == null && root.right == null)
 			return 0;
-		if(root.left!=null && root.right!=null){
-			return 1+leftcount+rightcount;
+		if (root.left != null && root.right != null) {
+			return 1 + leftcount + rightcount;
 		}
-		if(root.left==null && root.right!=null){
+		if (root.left == null && root.right != null) {
 			return rightcount;
 		}
-		if(root.left!=null && root.right!=null){
+		if (root.left != null && root.right != null) {
 			return leftcount;
 		}
 		return 0;
-		
+
 	}
-	
+
 	/**
-	 * Number of half nodes in a Binary Tree.
-	 * Definition : Nodes having only one child is called Half nodes.
+	 * Number of half nodes in a Binary Tree. Definition : Nodes having only one
+	 * child is called Half nodes.
 	 */
-	public int numberOfHalfNodes(Treenode root){
-		if(root==null) return 0;
+	public int numberOfHalfNodes(Treenode root) {
+		if (root == null)
+			return 0;
+
+		int leftcount = numberOfHalfNodes(root.left);
+		int rightcount = numberOfHalfNodes(root.right);
+
+		/*
+		 * If either one of left or right child is null,then it is considered as
+		 * half nodes, hence we add 1 to the value getting from left subtree and
+		 * right subtree. else if both child's are not null ,then it is
+		 * considered as full node, hence we don't consider an extra 1 added to
+		 * left or right subtree.
+		 */
+		if ((root.left != null && root.right == null) || (root.left == null && root.right != null)) {
+			return 1 + leftcount + rightcount;
+		} else {
+			return leftcount + rightcount;
+		}
+	}
+
+	/**
+	 * Two Trees are Identical to Each other. Base Condition:If both trees are
+	 * Null ,return true (as they are identical). Otherwise we recurively check
+	 * the left and right subtree to check whether they are identical or not.
+	 */
+
+	public boolean IdenticalTrees(Treenode root1, Treenode root2) {
+		/*
+		 * * Base Condition:If both trees are Null ,return true (as they are
+		 * identical).
+		 */
+		if (root1 == null && root2 == null)
+			return true;
+
+		if (root1 == null || root2 == null)
+			return false;
+
+		/*
+		 * if two strings are identical then Comparator outputs a zero, if first
+		 * string greater than second string then comparator outputs greater
+		 * than zero(positive values, else first string less than second string
+		 * then comparator outputs less than zero(negative values)
+		 */
+
+		if (!((root1.data.toString()).compareTo(root2.data.toString()) == 0)) {
+			return false;
+		}
+
+		boolean left = IdenticalTrees(root1.left, root2.left);
+		boolean right = IdenticalTrees(root1.right, root2.right);
+
+		/*
+		 * if both left and right subtree is Similar or Identical ,return True
+		 * else return false
+		 */
+		return (left && right);
+
+	}
+
+	/**
+	 * Finding the level that has maximum sum in the binary tree. (Level Order
+	 * traversal Algorithm).
+	 */
+
+	public int findLevelwithMaximumSum(Treenode root) {
+		if (root == null)
+			return 0;
+		int max = Integer.MIN_VALUE;
+		int level = 0;
+		Queue<Treenode> queue = new LinkedList<Treenode>();
+		queue.offer(root);
+
+		while (!queue.isEmpty()) {
+			int levelSum = 0;
+			int size = queue.size();
+			for (int i = 0; i < size; i++) {
+				Treenode temp = queue.poll();
+				levelSum += (int) temp.data;
+
+				if (temp.left != null)
+					queue.add(temp.left);
+				if (temp.right != null)
+					queue.add(temp.right);
+			}
+			if (max < levelSum)
+				max = levelSum;
+			/*
+			 * level with maximum sum of nodes i.e height=log(n) as 2^height=n
+			 */
+			level = (int) Math.log(queue.size());
+		}
+		return max;
+	}
+
+	/**
+	 * Finding all the paths from the root to the leaf nodes and print them.
+	 */
+
+	public void pathRootToLeaf(Treenode root, String str) {
+
+		if (root.left == null && root.right == null) {
+			String s = str +" "+ root.data;
+			System.out.println(s);
+			return;
+		}
+		pathRootToLeaf(root.left, str +" "+ root.data);
+		pathRootToLeaf(root.right, str+" " + root.data);
+
+	}
+
+	/**
+	 * Finding all the paths from the root to the leaf nodes with a particular
+	 * sum.
+	 * 
+	 */
+	public boolean pathRootToLeafWithSum(Treenode root, int sum) {
+		if (root == null)
+			return false;
+
+		if (root.left == null && root.right == null) {
+			if (sum == (int) root.data)
+				return true;
+		}
+
+		boolean left = pathRootToLeafWithSum(root.left, sum - (int) root.data);
+		boolean right = pathRootToLeafWithSum(root.right, sum - (int) root.data);
+
+		return (left || right);
+	}
+
+	/**
+	 * Given a binary tree, check whether it is a mirror of itself (ie,
+	 * symmetric around its center).
+	 */
+	public boolean SymmetricTree(Treenode root1) {
+		if (root1 == null)
+			return true;
+		return isMirror(root1.left, root1.right);
+	}
+
+	/**
+	 * Given two binary trees,check whether they are mirror of each other or not
+	 */
+	public boolean isMirror(Treenode root1, Treenode root2) {
+		if (root1 == null && root2 == null)
+			return true;
+
+		if (root1 == null || root2 == null)
+			return false;
+
+		if (!(root1.data == root2.data))
+			return false;
+
+		boolean left = isMirror(root1.left, root2.right);
+		boolean right = isMirror(root1.right, root2.left);
+
+		return (left && right);
+	}
+
+	/**
+	 * Level Order Traversal in Spiral Order (zig zag order- left to right then
+	 * next row right to left and vice versa)
+	 * 
+	 * @param root
+	 */
+	public void LevelOrderSpiral(Treenode root) {
+
+		if (root == null)
+			return;
+		List<Integer> list = new LinkedList<Integer>();
+		Stack<Treenode> s1 = new Stack<Treenode>(); // Left to right
+		Stack<Treenode> s2 = new Stack<Treenode>(); // right to left
+		s1.push(root);
+
+		while (!s1.isEmpty() || !s2.isEmpty()) {
+
+			while (!s1.isEmpty()) {
+				Treenode curr = s1.pop();
+				if (curr.left != null)
+					s2.push(curr.left);
+				if (curr.right != null)
+					s2.push(curr.right);
+				System.out.print(curr.data + " ");
+			}
+
+			while (!s2.isEmpty()) {
+				Treenode curr = s2.pop();
+				if (curr.right != null)
+					s1.push(curr.right);
+				if (curr.left != null)
+					s1.push(curr.left);
+				System.out.print(curr.data + " ");
+			}
+		}
+
+	}
+
+	/*
+	 * Build Binary Tree from Post-order and In-order Traversal of the tree.
+	 */
+	public Treenode buildBinaryTree(int[] preOrder, int[] inorder) {
+		if (preOrder.length == 0 || preOrder.length != inorder.length) {
+			return null;
+		}
+		Treenode root = buildTree(preOrder, 0, preOrder.length - 1, inorder, 0, inorder.length - 1);
+		return root;
+	}
+
+	private Treenode buildTree(int[] preOrder, int pStart, int pEnd, int[] inorder, int iStart, int iEnd) {
+		if (pStart > pEnd || iStart > iEnd)
+			return null;
+
+		Treenode root = new Treenode(preOrder[pStart]);
+		int offset = iStart;
+		while (offset < iEnd) {
+			if (inorder[offset] == preOrder[pStart])
+				break;
+		}
+		root.left = buildTree(preOrder, pStart + 1, pStart + offset - iStart, inorder, iStart, offset - 1);
+		root.right = buildTree(preOrder, pStart + offset - iStart + 1, pEnd, inorder, offset + 1, iEnd);
+		return root;
+
+	}
+
+	/**
+	 * Vertical order traversal of Tree
+	 */
+	public void VerticalOrderTraversal(Treenode root) {
 		
-		int leftcount=numberOfHalfNodes(root.left);
-		int rightcount=numberOfHalfNodes(root.right);
-		if((root.left!=null && root.right==null) ||(root.left==null && root.right!=null)){
-			return  1+leftcount+rightcount;
-		}
-		else{
-			return leftcount+rightcount;
-		}
+		HashMap<Integer, List<Integer>> map = new HashMap<>();
+		int horizantalDist=0;
+		
+		calculateVerticalSum(root,map,horizantalDist);
+		
+		for(Entry<Integer, List<Integer>> entry : map.entrySet())
+			System.out.println(entry.getKey()+"  |  "+entry.getValue());
+		
+
+	}
+
+	private void calculateVerticalSum(Treenode root, HashMap<Integer, List<Integer>> map, int horizantalDist) {
+		
+		if(root.left!=null)
+			calculateVerticalSum(root.left,map,horizantalDist-1);
+		if(root.right!=null)
+			calculateVerticalSum(root.right,map,horizantalDist+1);
+		
+		if(!map.containsKey(horizantalDist))
+			map.put(horizantalDist,new ArrayList<>());
+		map.get(horizantalDist).add((Integer) root.data);
+		
 	}
 }

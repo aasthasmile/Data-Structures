@@ -24,7 +24,7 @@ public class BinaryTree {
 		root.right.right.left = new Treenode<Integer>(8);
 		root.right.right.right = new Treenode<Integer>(9);
 		
-		System.out.println("\nInserting an element in the Binary Tree:");
+	    System.out.println("\nInserting an element in the Binary Tree:");
 		Tree t = new Tree();
 		Treenode<Integer> rootnode = null;
 		for (int i = 1; i <= 7; i++) {
@@ -50,6 +50,9 @@ public class BinaryTree {
 
 		System.out.println("\nThe Inorder traversal(iteratively) is :");
 		t.InOrderIterative(root);
+		
+		System.out.println("\nThe postorder traversal is(iteratively) :");
+		t.postOrderIterative(root);
 
 		System.out.println("\nThe Level Order traversal is :");
 		t.LevelOrderTraversal(root);
@@ -57,21 +60,35 @@ public class BinaryTree {
 		System.out.println("\nLevel order traversal in Reverse order :");
 		t.LevelOrderReverse(root);
 		
+		System.out.println("\n\n Level Order Traversal in Spiral Order:");
+		t.LevelOrderSpiral(root);
+		
+		System.out.println("");
+		
+		System.out.println("\nMaximum Depth of a binary Tree :");
+		System.out.print(t.maximumDepth(root));
+		
 		System.out.println("\nMinimum Depth of a binary Tree :");
 		System.out.print(t.minimumDepth(root));
 		
 		System.out.println("\nNumber of Leaves in a binary tree :");
 		System.out.print(t.numberOfLeaves(root));
 		
-		System.out.println("\nNumber of Full nodes in a binary tree :");
+		System.out.println("\nNumber of Full nodes(both childs) in a binary tree :");
 		System.out.println(t.numberOfFullNodes(root));
 		
-		System.out.println("\nNumber of half nodes in a binary Tree :");
+		System.out.println("\nNumber of half nodes(single child) in a binary Tree :");
 		System.out.println(t.numberOfHalfNodes(root));
-
+		
+		System.out.println("\nTwo trees are Identical to each other or not :");
+		System.out.println(t.IdenticalTrees(root, root));
+	
+		System.out.println("\nFinding Level with the maximum Sum :");
+		System.out.println(t.findLevelwithMaximumSum(root));
+		
 		System.out.println("\nFinding Maximum Element in a Binary tree :");
 		System.out.println(t.MaxElementinBT(root));
-		System.out.println(t.MaxElementinBT_PreOrder(root));
+		//System.out.println(t.MaxElementinBT_PreOrder(root));
 
 		System.out.println("\n--------Tree 2: ------ ");
 		Queue<Treenode> queue = new LinkedList<Treenode>();
@@ -86,7 +103,7 @@ public class BinaryTree {
 		}
 
 		t.LevelOrderTraversal(tree2);
-
+		
 		System.out.println("\nFinding the size of the tree :");
 		System.out.print(t.SizeOfBT(tree2));
 
@@ -109,12 +126,23 @@ public class BinaryTree {
 			System.out.print(height +" ");
 		}
         
-		System.out.println("Tree 3 using BFS: ");
+		System.out.println("\nTree 3 using BFS: ");
 		t.LevelOrderTraversal(tree3);
 
 		System.out.println("\n\nWidth of the tree: ");
 		System.out.println(t.widthOfTree(tree3));
 
+		System.out.println("\n\nAll the paths from root to the leaf :");
+		t.pathRootToLeaf(tree3, "");
+		
+		int sum=34;
+		System.out.println("\n\nIs there any path exists from root to the leaf with sum ="+sum);
+		System.out.println(t.pathRootToLeafWithSum(tree3,sum));
+		
+		System.out.println("\n\nVertical Order Traversal ");
+		t.VerticalOrderTraversal(root);
+		
+		
 				
 	}
 
