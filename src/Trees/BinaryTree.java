@@ -142,6 +142,9 @@ public class BinaryTree {
 		System.out.println("\n\nVertical Order Traversal ");
 		t.VerticalOrderTraversal(root);
 		
+		System.out.println("\n\nLowest Common Ancestor :");
+		System.out.println(t.lowestCommonAncestor(rootnode, 11, 16));
+		
 		
 				
 	}

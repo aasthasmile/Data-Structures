@@ -695,7 +695,7 @@ class Tree {
 	}
 
 	/**
-	 * Level Order Traversal in Spiral Order (zig zag order- left to right then
+	 * Level Order Traversal in Spiral Order (zig-zag order- left to right then
 	 * next row right to left and vice versa)
 	 * 
 	 * @param root
@@ -769,6 +769,7 @@ class Tree {
 		
 		calculateVerticalSum(root,map,horizantalDist);
 		
+		
 		for(Entry<Integer, List<Integer>> entry : map.entrySet())
 			System.out.println(entry.getKey()+"  |  "+entry.getValue());
 		
@@ -786,5 +787,22 @@ class Tree {
 			map.put(horizantalDist,new ArrayList<>());
 		map.get(horizantalDist).add((Integer) root.data);
 		
+	}
+	
+	/**Lowest Common Ancestor *
+	 */
+	public Treenode lowestCommonAncestor(Treenode root,Object value1,Object value2){
+		if(root==null) return null;
+		if(root.data.equals(value1) || root.data.equals(value2))
+			return root;
+		Treenode left=lowestCommonAncestor(root.left, value1, value2);
+		Treenode right=lowestCommonAncestor(root.right, value1, value2);
+		
+		if(left!=null && right!=null)
+			return root;
+		if(left==null && right==null)
+			return null;
+		
+        return (left!=null )?left:right;
 	}
 }
