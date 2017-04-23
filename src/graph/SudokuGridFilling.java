@@ -22,15 +22,14 @@ public class SudokuGridFilling {
 		
 		System.out.println(row+","+col);
 		
-		if (row >= 8 && !unassignedGrid(grid)) {
+		if ((row >= 8 && col>8 ) || !unassignedGrid(grid)) {
 			return true;
 		}
-		
 		if (col >= 8 && row < 8) {
 			row++;
 			col = 0;
 		} 
-		
+				
 		//System.out.println("Before Exception : "+row+","+col);
 		while (grid[row][col] != 0) {
 			if (col >= 8) {
@@ -40,6 +39,8 @@ public class SudokuGridFilling {
 				col++;
 			}
 		}
+		
+		
 		
 		/*if (col > 8) {
 			row++;
@@ -136,7 +137,7 @@ public class SudokuGridFilling {
 	public static void printGrid(int[][] grid) {
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[0].length; j++) {
-				System.out.print(grid[i][j] + " ");
+				System.out.print(grid[i][j] + "\t");
 			}
 			System.out.println();
 		}
